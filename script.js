@@ -5,7 +5,6 @@ table.addClass("jumbotron");
 let momento = document.getElementById("currentDay");
 momento.append((moment().format('MMMM Do YYYY, h:mm:ss a')));
 
-
 //creating an array to call back in the for loop, generating a table
 let timeList = [
     "9AM",
@@ -41,6 +40,9 @@ function dynamicTime() {
         let saveButton = $("<td></td>");
         let button = document.createElement('button');
         button.classList.add("saveBtn");
+        let button = $("<button></button>");
+        //add event listener click event 
+        button.addClass("saveBtn");
         saveButton.append(button);
         //setting a key in localstorage with the same id as textarea and storing the val in it
         button.onclick = () => {

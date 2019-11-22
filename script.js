@@ -3,20 +3,24 @@ let table = $("<table></table>");
 table.addClass("jumbotron");
 //appending currentDay 
 let momento = document.getElementById("currentDay");
-momento.append((moment().format('MMMM Do YYYY, h:mm:ss a')));
+let currentTime = (moment().format('MMMM Do YYYY'));
+momento.append(currentTime);
+//use colorScheme => () (if momento.currentTime() < #t-{i} {append.callClass("past")} else if currentTime = momento()
+//each row represents one hour timespan, while generating rows check if currentTime is <, =, or > rowTime
 
-
+let hourTime = (moment().format('HH'));
 //creating an array to call back in the for loop, generating a table
+//userTime vs militaryTime; the former is displayed to the user whereas the latter is used to compare local hourTime for color coding
 let timeList = [
-    "9AM",
-    "10AM",
-    "11AM",
-    "12PM",
-    "1PM",
-    "2PM",
-    "3PM",
-    "4PM",
-    "5PM"
+    {userTime: "9AM", militaryTime: "09"},
+    {userTime: "10AM", militaryTime: "10"},
+    {userTime: "11AM", militaryTime: "11"},
+    {userTime: "12PM", militaryTime: "12"},
+    {userTime: "1PM", militaryTime: "13"},
+    {userTime: "2PM", militaryTime: "14"},
+    {userTime: "3PM", militaryTime: "15"},
+    {userTime: "4PM", militaryTime: "16"},
+    {userTime: "5PM", militaryTime: "17"},
 ];
 
 //creating a function to determine local time and dynamically generate HTML for a table
@@ -26,7 +30,7 @@ function dynamicTime() {
         //timeBlock --> contains timeList elements
         let timeBlock = $("<td></td>");
         timeBlock.addClass("hour");
-        timeBlock.text(timeList[i]);
+        timeBlock.text(timeList[i].userTime);
         //description contains textarea input for planner
         let description = $("<td></td>");
         //utilizing bootstrap to make website device responsive
@@ -34,6 +38,16 @@ function dynamicTime() {
         //adding a unique id for each text area by adding "t-${i}" in front of each textarea (t-0, t-1, t-2...etc)
         let textarea = $("<textarea></textarea>").attr("id", `t-${i}`);
         textarea.addClass("textarea form-control");
+        //if else conditions comparing militaryTime from array to local hourTime; present, past, future classes assigned accordingly
+        if (timeList[i].militaryTime===hourTime) {
+            textarea.addClass("present")
+        }
+        else if (timeList[i].militaryTime<hourTime) {
+            textarea.addClass("past")
+        }
+        else if (timeList[i].militaryTime>hourTime) {
+            textarea.addClass("future")
+        };
         //this returns any values saved to local storage for each saved textarea input after refreshing the page
         textarea.val(localStorage.getItem(`t-${i}`));
         description.append(textarea);

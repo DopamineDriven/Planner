@@ -5,11 +5,9 @@ table.addClass("jumbotron");
 let momento = document.getElementById("currentDay");
 let currentTime = (moment().format('MMMM Do YYYY'));
 momento.append(currentTime);
-//use colorScheme => () (if momento.currentTime() < #t-{i} {append.callClass("past")} else if currentTime = momento()
-//each row represents one hour timespan, while generating rows check if currentTime is <, =, or > rowTime
 
+//hourTime will be used to compare with militaryTime for color coding purposes
 let hourTime = (moment().format('HH'));
-//creating an array to call back in the for loop, generating a table
 //userTime vs militaryTime; the former is displayed to the user whereas the latter is used to compare local hourTime for color coding
 let timeList = [
     {userTime: "9AM", militaryTime: "09"},
@@ -39,13 +37,13 @@ function dynamicTime() {
         let textarea = $("<textarea></textarea>").attr("id", `t-${i}`);
         textarea.addClass("textarea form-control");
         //if else conditions comparing militaryTime from array to local hourTime; present, past, future classes assigned accordingly
-        if (timeList[i].militaryTime===hourTime) {
+        if (timeList[i].militaryTime === hourTime) {
             textarea.addClass("present")
         }
-        else if (timeList[i].militaryTime<hourTime) {
+        else if (timeList[i].militaryTime < hourTime) {
             textarea.addClass("past")
         }
-        else if (timeList[i].militaryTime>hourTime) {
+        else if (timeList[i].militaryTime > hourTime) {
             textarea.addClass("future")
         };
         //this returns any values saved to local storage for each saved textarea input after refreshing the page
@@ -71,3 +69,4 @@ function dynamicTime() {
 };
 //executing dynamic time function
 dynamicTime();
+

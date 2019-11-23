@@ -52,6 +52,7 @@ function dynamicTime() {
         //saveButtons generated for storing user data to local storage as desired
         let saveButton = $("<td></td>");
         let button = document.createElement('button');
+        button.innerText = "save";
         button.classList.add("saveBtn");
         saveButton.append(button);
         //setting a key in localstorage with the same id as textarea and storing the val in it
